@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -37,7 +38,6 @@ public class RepositoryApplication implements CommandLineRunner {
         product1.setCategory("TEST");
         product1.setType("GENERAL");
         product1.setPrice(0.0);
-
         productRepository.save(product1);
 
         Product product2 = new Product();
@@ -46,24 +46,39 @@ public class RepositoryApplication implements CommandLineRunner {
         product2.setCategory("TEST");
         product2.setType("CUSTOM");
         product2.setPrice(15.0);
-
         productRepository.save(product2);
+
+        Product product3 = new Product();
+        product2.setName("Tester Product");
+        product2.setDescription("description");
+        product2.setCategory("USUAL");
+        product2.setType("SPECIFIC");
+        product2.setPrice(19.0);
+        productRepository.save(product3);
 
 //        List<Product> products = productRepository.findAll();
 //
 //        for (Product product : products) {
 //            LOG.info("Products found:" + product.toString());
 //        }
-
+//
 //        Product resultProduct = productRepository.findByType("CUSTOM");
 //
 //        LOG.info("GENERAL type of product found:" + resultProduct.toString());
 
-        List<Product> products = productRepository.findByDescriptionAndCategory("This is a tester product", "TEST");
+//        List<Product> products = productRepository.findByDescriptionAndCategory("This is a tester product", "TEST");
+//
+//        for (Product product : products) {
+//            LOG.info("DescriptionAndCategory Products found: {}", product);
+//        }
 
-        for (Product product : products) {
-            LOG.info("Products found: {}", product);
+        List<String> names = new ArrayList<>();
+        names.add("Tester Product");
+//        names.add("Another Tester Product");
+
+        List<Product> catAndNameProducts = productRepository.findByCategoryAndNameIn("TEST", names);
+        for (Product catAndNameProduct : catAndNameProducts) {
+            LOG.info("CategoryAndName Product: {}", catAndNameProduct);
         }
-
     }
 }

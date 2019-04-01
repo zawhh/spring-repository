@@ -8,6 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
+    // Warning: this will raise exception if multiple products are found
     Product findByType(String type);
 
     List<Product> findByDescriptionAndCategory(String description, String category);

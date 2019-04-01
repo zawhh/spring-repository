@@ -9,9 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootApplication
 public class RepositoryApplication implements CommandLineRunner {
 
@@ -49,12 +46,22 @@ public class RepositoryApplication implements CommandLineRunner {
         productRepository.save(product2);
 
         Product product3 = new Product();
-        product2.setName("Tester Product");
-        product2.setDescription("description");
-        product2.setCategory("USUAL");
-        product2.setType("SPECIFIC");
-        product2.setPrice(19.0);
+        product3.setName("Tester Product");
+        product3.setDescription("description");
+        product3.setCategory("USUAL");
+        product3.setType("SPECIFIC");
+        product3.setPrice(19.0);
         productRepository.save(product3);
+
+        Product productToUpdate = productRepository.findByType("SPECIFIC");
+        LOG.info("Before updating product details:{}", productToUpdate);
+        if (productToUpdate != null) {
+            productToUpdate.setName("Updated Product");
+            productToUpdate.setDescription("Updated description");
+
+            Product updated = productRepository.save(productToUpdate);
+            LOG.info("Updated product details:{}", updated);
+        }
 
 //        List<Product> products = productRepository.findAll();
 //
@@ -72,13 +79,13 @@ public class RepositoryApplication implements CommandLineRunner {
 //            LOG.info("DescriptionAndCategory Products found: {}", product);
 //        }
 
-        List<String> names = new ArrayList<>();
-        names.add("Tester Product");
-//        names.add("Another Tester Product");
-
-        List<Product> catAndNameProducts = productRepository.findByCategoryAndNameIn("TEST", names);
-        for (Product catAndNameProduct : catAndNameProducts) {
-            LOG.info("CategoryAndName Product: {}", catAndNameProduct);
-        }
+//        List<String> names = new ArrayList<>();
+//        names.add("Tester Product");
+////        names.add("Another Tester Product");
+//
+//        List<Product> catAndNameProducts = productRepository.findByCategoryAndNameIn("TEST", names);
+//        for (Product catAndNameProduct : catAndNameProducts) {
+//            LOG.info("CategoryAndName Product: {}", catAndNameProduct);
+//        }
     }
 }

@@ -53,15 +53,25 @@ public class RepositoryApplication implements CommandLineRunner {
         product3.setPrice(19.0);
         productRepository.save(product3);
 
-        Product productToUpdate = productRepository.findByType("SPECIFIC");
-        LOG.info("Before updating product details:{}", productToUpdate);
-        if (productToUpdate != null) {
-            productToUpdate.setName("Updated Product");
-            productToUpdate.setDescription("Updated description");
-
-            Product updated = productRepository.save(productToUpdate);
-            LOG.info("Updated product details:{}", updated);
+//        productRepository.delete(product3);
+        Product foundProd = productRepository.findByType("GENERAL");
+        if (foundProd != null) {
+            LOG.info("Product count in database:{}", productRepository.count());
+            productRepository.delete(foundProd);
+            LOG.info("Product is deleted");
+            LOG.info("Product count in database:{}", productRepository.count());
         }
+
+
+//        Product productToUpdate = productRepository.findByType("SPECIFIC");
+//        LOG.info("Before updating product details:{}", productToUpdate);
+//        if (productToUpdate != null) {
+//            productToUpdate.setName("Updated Product");
+//            productToUpdate.setDescription("Updated description");
+//
+//            Product updated = productRepository.save(productToUpdate);
+//            LOG.info("Updated product details:{}", updated);
+//        }
 
 //        List<Product> products = productRepository.findAll();
 //
